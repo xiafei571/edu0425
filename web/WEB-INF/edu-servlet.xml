@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 相当于注册了DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter两个bean，配置一些messageconverter。即解决了@Controller注解的使用前提配置。 -->
+	<mvc:annotation-driven />
+
+	<!-- 指明让springmvc容器去哪里扫描@Controller注解 -->
+	<context:component-scan
+		base-package="edu0425.spring.controller" />
+
+	<!-- 配置静态资源访问 -->
+	<mvc:resources mapping="/js/**" location="WEB-INF/js/" />
+	<mvc:resources mapping="/img/**" location="WEB-INF/img/" />
+
+	<!-- 配置主页 -->
+	<mvc:view-controller path="/" view-name="index" />
+
+	<!-- 使用默认的静态资源处理Servlet处理静态资源,启用默认Servlet -->
+	<mvc:default-servlet-handler />
+
+	<!-- 视图解析器ViewResolver -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 集成 Fastjson 默认配置 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+</beans>

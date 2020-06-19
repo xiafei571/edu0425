@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu0425.spring.dao.mapper.PlayerMapper">
+	<resultMap type="edu0425.spring.vo.PlayerInfo"
+		id="playerInfoResult">
+		<id property="rowId" column="rowId" />
+		<result property="pid" column="pid" />
+		<result property="pname" column="pname" />
+		<result property="age" column="age" />
+		<result property="photo" column="photo" />
+		<result property="nid" column="nid" />
+		<result property="overall" column="overall" />
+		<result property="potential" column="potential" />
+		<result property="cid" column="cid" />
+	</resultMap>
+
+	<resultMap type="edu0425.spring.vo.NationInfo"
+		id="nationInfoResult">
+		<id property="nid" column="nid" />
+		<result property="nation" column="nation" />
+		<result property="flag" column="flag" />
+	</resultMap>
+
+	<resultMap type="edu0425.spring.vo.ClubInfo"
+		id="clubInfoResult">
+		<id property="cid" column="cid" />
+		<result property="cname" column="cname" />
+		<result property="logo" column="logo" />
+	</resultMap>
+
+	<resultMap type="edu0425.spring.vo.ChartData"
+		id="chartDataResult">
+		<result property="key" column="k" />
+		<result property="value" column="v" />
+	</resultMap>
+
+	<select id="getDataOfAge"
+		resultType="edu0425.spring.vo.ChartData" resultMap="chartDataResult">
+		select nld as k,
+		count(*) as v
+		from
+		(select case
+		when age >=10 and age &lt; 15 then '10-14'
+		when age >=15 and age &lt; 20 then '15-19'
+		when age >=20 and age &lt; 25 then '20-24'
+		when age >=25 and age &lt; 30 then '25-29'
+		when age >=30 and age &lt; 35 then '30-34'
+		else 'other'
+		end as nld from players) a group by nld
+	</select>
+</mapper>

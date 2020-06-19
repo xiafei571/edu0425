@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu0425.spring.dao.mapper.DeptMapper">
+	<resultMap type="edu0425.spring.vo.DeptInfo"
+		id="deptInfoResult">
+		<id property="deptno" column="deptno"/>
+		<result property="dname" column="dname" />
+		<result property="loc" column="loc" />
+	</resultMap>
+
+	<insert id="addDept" keyProperty="deptno" parameterType="edu0425.spring.vo.DeptInfo" useGeneratedKeys="true">
+		insert into dept(deptno, dname, loc) values(null, #{dname}, #{loc})
+	</insert>
+
+	<update id="updateDept" parameterType="edu0425.spring.vo.DeptInfo">
+		update dept set dname = #{dname}, loc = #{loc} where deptno = #{deptno}
+	</update>
+
+</mapper>
