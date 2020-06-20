@@ -49,4 +49,14 @@
 		else 'other'
 		end as nld from players) a group by nld
 	</select>
+
+	<select id="getAvgOfOverallByNation"
+		resultType="edu0425.spring.vo.ChartData" resultMap="chartDataResult">
+		select n.nation as k, avg(p.overall) as v 
+		from players p  
+		right join nation n on p.nid = n.nid 
+		group by p.nid,n.nation 
+		having count(p.nid) >= 20
+		order by v desc limit 10
+	</select>
 </mapper>

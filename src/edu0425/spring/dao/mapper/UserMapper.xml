@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu0425.spring.dao.mapper.UserMapper">
+	<resultMap type="edu0425.spring.vo.UserInfo"
+		id="userInfoResult">
+		<id property="uid" column="uid"/>
+		<result property="loginId" column="loginId" />
+		<result property="userName" column="userName" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="valid" column="valid" />
+		<result property="gmt_create" column="gmt_create" />
+		<result property="gmt_modified" column="gmt_modified" />
+		<result property="onOff" column="onOff" />
+	</resultMap>
+
+
+	<select id="getPermissions" parameterType="String" resultMap="String">
+		select t4.permission from sys_users t1 
+		left join sys_users_roles t2 on t1.uid = t2.uid
+		left join sys_roles_permissions t3 on t2.rid = t3.rid
+		left join sys_permissions t4 on t3.pid = t4.pid
+		where t1.loginId=#{loginId}
+	</select>
+</mapper>

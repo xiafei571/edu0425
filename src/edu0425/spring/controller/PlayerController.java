@@ -51,4 +51,10 @@ public class PlayerController {
 	public JSONArray getChartOfAge() {
 		return playService.getJsonAge();
 	}
+	
+	@RequestMapping(value = "/chartofoverall", method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject getAvgOfOverallByNation() {
+		return playService.getAvgOfOverallByNation();
+	}
 }

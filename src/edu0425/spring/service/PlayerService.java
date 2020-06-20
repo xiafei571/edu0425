@@ -3,6 +3,7 @@ package edu0425.spring.service;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import edu0425.common.page.PaginationResult;
 import edu0425.spring.vo.ClubInfo;
@@ -25,4 +26,6 @@ public interface PlayerService {
 	List<ClubInfo> getAllClub();
 	
 	JSONArray getJsonAge();
+	
+	JSONObject getAvgOfOverallByNation();
 }

@@ -93,7 +93,7 @@
 			
 			//初始化图表
 			initChart();
-			//TODO 初始化第二个图表
+			//初始化第二个图表
 			initChart2();
 		}
 		
@@ -182,7 +182,7 @@
 						]
 				};
 				
-				//TODO 显示图表
+				//显示图表
 				myChart.setOption(option);
 			}
 		});
@@ -192,21 +192,40 @@
 	function initChart2(){
 		// 初始化echarts实例
 		var myChart = echarts.init(document.getElementById('chart_2'));
-		option = {
-			    xAxis: {
-			        type: 'category',
-			        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-			    },
-			    yAxis: {
-			        type: 'value'
-			    },
-			    series: [{
-			        data: [120, 200, 150, 80, 70, 110, 130],
-			        type: 'bar'
-			    }]
-			};
-		//TODO 显示图表
-		myChart.setOption(option);
+		$.ajax({
+			url : "chartofoverall",
+			success : function(result){
+				option = {
+					    title:{
+					          text: '国家球员能力平均值Top10',
+					        subtext: 'FIFA 2018',
+					    },
+					    tooltip: {
+					        trigger: 'axis',
+					        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+					            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+					        }
+					    },
+					    xAxis: {
+					        type: 'category',
+					        data: result.xAxis,
+					        axisTick: {
+				                alignWithLabel: true
+				            }
+					    },
+					    yAxis: {
+					        type: 'value',
+					        max:80,
+					        min:60
+					    },
+					    series: [{
+					        data: result.series,
+					        type: 'bar'
+					    }]
+					};
+				//显示图表
+				myChart.setOption(option);
+			}});
 	}
 	</script>
 </body>

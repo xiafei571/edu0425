@@ -95,4 +95,19 @@ public class PlayerServiceImpl implements PlayerService {
 		return array;
 	}
 
+	@Override
+	public JSONObject getAvgOfOverallByNation() {
+		JSONObject result = new JSONObject();
+		List<ChartData> list = playerMapper.getAvgOfOverallByNation();
+		JSONArray xAxis = new JSONArray();
+		JSONArray series = new JSONArray();
+		for (ChartData data : list) {
+			xAxis.add(data.getKey());
+			series.add(data.getValue());
+		}
+		result.put("xAxis", xAxis);
+		result.put("series", series);
+		return result;
+	}
+
 }

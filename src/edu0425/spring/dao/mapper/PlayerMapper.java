@@ -39,5 +39,7 @@ public interface PlayerMapper {
 	List<ClubInfo> getAllClub();
 	
 	List<ChartData> getDataOfAge();
+	
+	List<ChartData> getAvgOfOverallByNation();
 
 }
