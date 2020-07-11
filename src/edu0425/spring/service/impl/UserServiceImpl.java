@@ -1,10 +1,14 @@
 package edu0425.spring.service.impl;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSONArray;
 
 import edu0425.common.util.MD5Util;
 import edu0425.spring.dao.mapper.UserMapper;
@@ -41,6 +45,16 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public JSONArray getPermissions(String loginId) {
+		Set<String> permissions = userMapper.getPermissions(loginId);
+		JSONArray jsonArray = new JSONArray();
+		for(String s : permissions) {
+			jsonArray.add(s);
+		}
+		return jsonArray;
 	}
 
 }

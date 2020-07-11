@@ -59,4 +59,35 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="datasource"></property>
 	</bean>
+	
+	<!-- shiro.1 将自定义的Realm 加入到IOC容器 -->
+	<bean id="myRealm" class="edu0425.spring.shiro.MyRealm">
+	</bean>
+	
+	<!-- shiro.2 指定安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myRealm"></property>
+	</bean>
+	
+	<!-- shiro.3 配置shiro过滤器，id名必须要跟web.xml中的过滤器名字一样 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- shiro的核心安全接口 -->
+		<property name="securityManager" ref="securityManager"></property>
+		<!-- 身份认证失败的话，跳转到登录页面 -->
+		<property name="loginUrl" value="/login"></property>
+		<!-- 权限认证失败的话，跳转到登录页面 -->
+		<property name="unauthorizedUrl" value="/login"></property>
+		<!-- shiro连接约束配置，定义过滤链 -->
+		<property name="filterChainDefinitions">
+			<value>
+				/login=anon
+				/admin/**=authc,roles[admin]
+				/dept/**=perms[dept.select]
+			</value>
+		</property>
+	</bean>
+	
+	<!-- shiro.4 保证实现了shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
+	</bean>
 </beans>

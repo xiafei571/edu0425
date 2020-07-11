@@ -16,8 +16,14 @@
 		<result property="onOff" column="onOff" />
 	</resultMap>
 
+	<select id="getRoles" parameterType="String" resultType="String">
+		select t3.role from sys_users t1 
+		left join sys_users_roles t2 on t1.uid = t2.uid
+		left join sys_roles t3 on t2.rid = t3.rid
+		where t1.loginId=#{loginId}
+	</select>
 
-	<select id="getPermissions" parameterType="String" resultMap="String">
+	<select id="getPermissions" parameterType="String" resultType="String">
 		select t4.permission from sys_users t1 
 		left join sys_users_roles t2 on t1.uid = t2.uid
 		left join sys_roles_permissions t3 on t2.rid = t3.rid
